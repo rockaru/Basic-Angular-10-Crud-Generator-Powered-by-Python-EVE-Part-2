@@ -15,6 +15,7 @@ export class UpdateComponent implements OnInit {
   form:any=[]
   item:any=[]
   id:string
+  ws = new WebSocket("ws://localhost:6556")
   myFormGroup: FormGroup = new FormGroup({})
 
   constructor(
@@ -31,7 +32,9 @@ export class UpdateComponent implements OnInit {
    }
 
   ngOnInit() {
-    
+    this.ws.onmessage(data=>{
+      this.loadData()
+    })
   }
 
   loadData(){
