@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 
 import { FormService } from '../form.service'
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'create',
@@ -12,7 +12,6 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class CreateComponent implements OnInit {
 
   resource:string
-  scope:string
   form:any=[]
   myFormGroup: FormGroup = new FormGroup({})
 
@@ -21,25 +20,15 @@ export class CreateComponent implements OnInit {
     private dialogRef: MatDialogRef<CreateComponent>,
     @Inject(MAT_DIALOG_DATA) data
   ) {
-    this.resource = data.resource
     this.form =data.form
-    this.scope =data.scope
+    this.resource=data.resource
+    this.myFormGroup = this.formService.loadFormGroup(this.form)
+
    }
 
   ngOnInit() {
     
-    this.loadData()
 
-  }
-
-  async loadData(){
-    
-    if(!this.form){
-      this.form = await this.formService.getForm(this.resource,this.scope)
-    }
-
-    this.myFormGroup = this.formService.loadFormGroup(this.form)
-  
   }
 
   close(){
@@ -47,7 +36,9 @@ export class CreateComponent implements OnInit {
   }
 
   save(){
+  
     this.dialogRef.close(this.myFormGroup.value);
   }
+  
 
 }

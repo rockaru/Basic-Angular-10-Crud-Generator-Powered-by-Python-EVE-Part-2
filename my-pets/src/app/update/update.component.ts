@@ -12,46 +12,32 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class UpdateComponent implements OnInit {
 
   resource:string
-  id:string
-  scope:string="update"
   form:any=[]
   item:any=[]
+  id:string
   myFormGroup: FormGroup = new FormGroup({})
 
   constructor(
+    private dataService:DataService,
     private formService: FormService,
-    private dataService: DataService,
     private dialogRef: MatDialogRef<UpdateComponent>,
     @Inject(MAT_DIALOG_DATA) data
   ) {
     this.resource = data.resource
     this.item = data.item
-    this.form =JSON.parse(localStorage.getItem(`form-${this.resource}-${this.scope}`))
+    this.form =data.form
+    this.myFormGroup = this.formService.loadFormGroup(this.form,this.item)
+
    }
 
   ngOnInit() {
-    this.loadData()
+    
   }
 
-  async loadData(){
-
-    console.log(this.item)
-
-    const group = {}
-
-    if(!this.form){
-      this.form = await this.formService.getForm(this.resource,this.scope)
-    }
-
-    console.log(this.form)
-   
-    for(let element of this.form){
-      group[element.name] = new FormControl(this.item[element.name])
-    }
-
-    this.myFormGroup = new FormGroup(group)
-
-    console.log(this.myFormGroup)
+  loadData(){
+    this.dataService.getOne(this.resource, this.id).subscribe((data) => {
+      this.item=data
+    })
 
   }
 

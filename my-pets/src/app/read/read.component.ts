@@ -13,7 +13,6 @@ import { DataService } from '../data.service'
 export class ReadComponent implements OnInit {
 
   resource:string
-  scope:string="read"
   form:any=[]
   items:any=[]
 
@@ -24,22 +23,17 @@ export class ReadComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data
   ) { 
     this.resource = data.resource
-    this.form =JSON.parse(localStorage.getItem(`form-${this.resource}-${this.scope}`))
+    this.form =data.form
   }
 
   ngOnInit() {
     this.loadData()
   }
 
-  async loadData(){
-    if(!this.form){
-      this.form = await this.formService.getForm(this.resource,this.scope)
-    }
-    this.items = await this.dataService.getAll(this.resource)
-  }
-
-  close(){
-    this.dialogRef.close()
+  loadData(){
+    this.dataService.getAll(this.resource).subscribe((data) => {
+      this.items=data["_items"]
+    })
   }
 
   create(){
@@ -47,7 +41,8 @@ export class ReadComponent implements OnInit {
   }
 
   update(id){
-    this.formService.openUpdate(this.resource,id,UpdateComponent)
+    const dialogRef = this.formService.openUpdate(this.resource,id,UpdateComponent)
+      
   }
 
   delete(id){

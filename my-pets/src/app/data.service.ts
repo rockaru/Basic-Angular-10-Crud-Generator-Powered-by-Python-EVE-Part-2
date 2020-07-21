@@ -12,40 +12,31 @@ export class DataService {
     private httpClient: HttpClient
   ) { }
 
-  public getAll(resource): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.httpClient.get(`api/${resource}`).pipe().subscribe(data => {
-        resolve(this.setAll(data))
-      })
-    })
-  }
-
-  private setAll(data) {
-    return data._items
+  public getAll(resource) {
+    
+     return this.httpClient.get(`api/${resource}`).pipe()
+      
   }
 
   public getOne(resource,id){
     return this.httpClient.get(`api/${resource}/${id}`).pipe()
   }
 
-  private setOne(data){
-    const item = {}
-    for (let i in data) {
-      item[i] = data[i]
-    }
-    return item
-  }
-
   public add(resource, data): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.httpClient.post(`api/${resource}`, data).pipe().subscribe(data => {
-        resolve(this.setAdd(data))
-      })
+    
+    this.httpClient.post(`api/${resource}`, data).pipe().subscribe(data=>{
+      resolve(console.log(data))
     })
+  })
   }
 
-  private setAdd(data){
-    return data
+  public update(resource,id,data): Promise<any> {
+    return new Promise((resolve, reject) => {
+    return this.httpClient.patch(`api/${resource}/${id}`,data).pipe().subscribe(data=>{
+      resolve(console.log(data))
+    })
+  })
   }
 
 }
