@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>{{resource}}</h2>
+<h2 mat-dialog-title>View {{resource}}</h2>
 
 <mat-dialog-content>
   
@@ -13,9 +13,9 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of items">
-                    <td *ngFor="let key of form">{{ item[key.name] }}</td>
-                    <td><button mat-button color="primary" type="button" (click)="update(item._id)">Update</button></td>
-                    <td><button mat-button color="warn" (click)="delete(item._id)">Delete</button></td>
+                    <td *ngFor="let key of form"><a (click)="details(item)">{{ item[key.name] }}</a></td>
+                    <td><button mat-button color="primary" type="button" (click)="update(item)">Update</button></td>
+                    <td><button mat-button color="warn" type="button" (click)="delete(item)">Delete</button></td>
             </tr>
               </tbody>
     </table>

@@ -6,7 +6,7 @@ import { ReadComponent } from './read/read.component';
 import { CreateComponent } from './create/create.component';
 import { UpdateComponent } from './update/update.component';
 
-import { MatDialogModule } from "@angular/material/dialog";
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from "@angular/material/dialog";
 import {MatTableModule} from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatInputModule} from '@angular/material/input'
@@ -16,13 +16,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { DeleteComponent } from './delete/delete.component';
+import { DetailsComponent } from './details/details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ReadComponent,
     CreateComponent,
-    UpdateComponent
+    UpdateComponent,
+    DeleteComponent,
+    DetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +40,9 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS,useValue:{maxWidth:'200vw',autoFocus:true}}
+  ],
   bootstrap: [AppComponent],
   entryComponents: [ReadComponent]
 })

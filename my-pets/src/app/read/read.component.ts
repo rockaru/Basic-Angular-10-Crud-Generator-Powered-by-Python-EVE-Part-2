@@ -1,9 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core'
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
+import {MAT_DIALOG_DATA} from '@angular/material/dialog'
 import { CreateComponent } from '../create/create.component'
 import { UpdateComponent } from '../update/update.component'
+import { DeleteComponent } from '../delete/delete.component'
+import { DetailsComponent } from '../details/details.component'
 import { FormService } from '../form.service'
-import { DataService } from '../data.service'
 
 @Component({
   selector: 'app-read',
@@ -18,35 +19,32 @@ export class ReadComponent implements OnInit {
 
   constructor(
     private formService: FormService,
-    private dataService: DataService,
-    private dialogRef: MatDialogRef<ReadComponent>,
     @Inject(MAT_DIALOG_DATA) data
   ) { 
+    this.items = data.items
     this.resource = data.resource
     this.form =data.form
   }
 
   ngOnInit() {
-    this.loadData()
-  }
-
-  loadData(){
-    this.dataService.getAll(this.resource).subscribe((data) => {
-      this.items=data["_items"]
-    })
+    
   }
 
   create(){
     this.formService.openCreate(this.resource,CreateComponent)
   }
 
-  update(id){
-    const dialogRef = this.formService.openUpdate(this.resource,id,UpdateComponent)
+  details(item){
+    this.formService.openDetails(this.resource,item,DetailsComponent)
+  }
+
+  update(item){
+    this.formService.openUpdate(this.resource,item,UpdateComponent)
       
   }
 
-  delete(id){
-
+  delete(item){
+    this.formService.openDelete(this.resource,item,DeleteComponent)
   }
 
 }

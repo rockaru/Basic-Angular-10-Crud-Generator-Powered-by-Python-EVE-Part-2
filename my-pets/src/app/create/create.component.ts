@@ -28,15 +28,9 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     
-
-  }
-
-  close(){
-    this.dialogRef.close()
   }
 
   save(){
-  
     this.dialogRef.close(this.myFormGroup.value);
   }
   

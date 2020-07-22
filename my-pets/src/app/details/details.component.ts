@@ -2,22 +2,23 @@ import { Component, OnInit, Inject } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
 import { FormService } from '../form.service'
 import { FormGroup } from '@angular/forms';
+
+import { UpdateComponent } from '../update/update.component'
+import { DeleteComponent } from '../delete/delete.component'
 @Component({
-  selector: 'app-update',
-  templateUrl: './update.component.html',
-  styleUrls: ['./update.component.scss']
+  selector: 'app-details',
+  templateUrl: './details.component.html',
+  styleUrls: ['./details.component.scss']
 })
-export class UpdateComponent implements OnInit {
+export class DetailsComponent implements OnInit {
 
   resource:string
   form:any=[]
   item:any=[]
-  id:string
   myFormGroup: FormGroup = new FormGroup({})
 
   constructor(
     private formService: FormService,
-    private dialogRef: MatDialogRef<UpdateComponent>,
     @Inject(MAT_DIALOG_DATA) data
   ) {
     this.resource = data.resource
@@ -31,8 +32,13 @@ export class UpdateComponent implements OnInit {
       
   }
 
-  save(){
-    this.dialogRef.close(this.myFormGroup.value);
+  update(item){
+    this.formService.openUpdate(this.resource,item,UpdateComponent)
+      
+  }
+
+  delete(item){
+    this.formService.openDelete(this.resource,item,DeleteComponent)
   }
 
 }

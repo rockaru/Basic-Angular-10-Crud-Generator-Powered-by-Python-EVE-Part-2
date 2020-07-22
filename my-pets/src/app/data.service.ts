@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { SELECT_PANEL_PADDING_X } from '@angular/material/select';
-import { rejects } from 'assert';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +32,14 @@ export class DataService {
   public update(resource,id,data): Promise<any> {
     return new Promise((resolve, reject) => {
     return this.httpClient.patch(`api/${resource}/${id}`,data).pipe().subscribe(data=>{
+      resolve(console.log(data))
+    })
+  })
+  }
+
+  public delete(resource,id): Promise<any> {
+    return new Promise((resolve, reject) => {
+    return this.httpClient.delete(`api/${resource}/${id}`).pipe().subscribe(data=>{
       resolve(console.log(data))
     })
   })
