@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import { ReadComponent } from './read/read.component';
-import { CreateComponent } from './create/create.component';
-import { DataService } from './data.service'
-import { FormService } from './form.service'
-
+import { CreateService } from './crudService/create'
+import { ReadService } from './crudService/read'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,19 +10,18 @@ export class AppComponent {
   title = 'my-pets';
 
   constructor(
-    private dialog: MatDialog,
-    private dataService: DataService,
-    private formService: FormService,
+    private readService:ReadService,
+    private createService:CreateService,
     )
-  {}
+  {
+  }
 
   read(resource){
-    this.formService.openRead(resource,ReadComponent)
+    this.readService.read(resource)
   }
 
   create(resource){
-    this.formService.openCreate(resource,CreateComponent)
-
+    this.createService.create(resource)
   }
 
 }

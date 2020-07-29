@@ -9,8 +9,10 @@ import { FormGroup } from '@angular/forms';
 })
 export class DeleteComponent implements OnInit {
 
+  resource:string
   form:any=[]
   item:any=[]
+  id:string
   myFormGroup: FormGroup = new FormGroup({})
 
   constructor(
@@ -18,6 +20,7 @@ export class DeleteComponent implements OnInit {
     private dialogRef: MatDialogRef<DeleteComponent>,
     @Inject(MAT_DIALOG_DATA) data
   ) {
+    this.resource = data.resource
     this.item = data.item
     this.form =data.form
     this.myFormGroup = this.formService.loadFormGroup(this.form,this.item)

@@ -75,24 +75,21 @@ export class FormService {
   openRead(resource, component) {
     const scope = "read"
     let form = JSON.parse(localStorage.getItem(`form-${resource}-${scope}`))
-    this.dataService.getAll(resource).subscribe((data) => {
-
       if (!form) {
         this.getForm(resource).subscribe(form => {
           form = this.setStructure(resource, scope, form)
-          this.loadRead(form, data, resource, component)
+          this.loadRead(form, resource, component)
         })
       } else {
-        this.loadRead(form, data, resource, component)
+        this.loadRead(form, resource, component)
       }
-    })
+    
 
   }
 
-  loadRead(form, data, resource, component) {
+  loadRead(form,  resource, component) {
     const dialogConfig = new MatDialogConfig()
     dialogConfig.data = {
-      items: data["_items"],
       resource: resource,
       form: form,
     }

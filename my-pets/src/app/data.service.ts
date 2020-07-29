@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-
+import {Observable} from 'rxjs'
 @Injectable({
   providedIn: 'root'
 })
@@ -10,7 +10,7 @@ export class DataService {
     private httpClient: HttpClient
   ) { }
 
-  public getAll(resource) {
+  public getAll(resource): Observable<any> {
     
      return this.httpClient.get(`api/${resource}`).pipe()
       

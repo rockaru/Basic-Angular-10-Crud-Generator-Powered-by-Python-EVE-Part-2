@@ -12,11 +12,14 @@
           </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of items">
+            <ng-container *ngIf="items$ | async as items">
+            <tr *ngFor="let item of items._items">
                     <td *ngFor="let key of form"><a (click)="details(item)">{{ item[key.name] }}</a></td>
                     <td><button mat-button color="primary" type="button" (click)="update(item)">Update</button></td>
                     <td><button mat-button color="warn" type="button" (click)="delete(item)">Delete</button></td>
             </tr>
+          </ng-container>
+          
               </tbody>
     </table>
  

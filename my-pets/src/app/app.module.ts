@@ -26,7 +26,7 @@ import { DetailsComponent } from './details/details.component';
     CreateComponent,
     UpdateComponent,
     DeleteComponent,
-    DetailsComponent
+    DetailsComponent,
   ],
   imports: [
     BrowserModule,

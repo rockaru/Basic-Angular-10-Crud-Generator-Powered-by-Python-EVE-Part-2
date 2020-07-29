@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
+import {MAT_DIALOG_DATA} from '@angular/material/dialog'
 import { FormService } from '../form.service'
 import { FormGroup } from '@angular/forms';
 
-import { UpdateComponent } from '../update/update.component'
-import { DeleteComponent } from '../delete/delete.component'
+import { UpdateService } from '../crudService/update'
+import { DeleteService } from '../crudService/delete'
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
@@ -18,6 +18,8 @@ export class DetailsComponent implements OnInit {
   myFormGroup: FormGroup = new FormGroup({})
 
   constructor(
+    private updateService: UpdateService,
+    private deleteService: DeleteService,
     private formService: FormService,
     @Inject(MAT_DIALOG_DATA) data
   ) {
@@ -33,12 +35,12 @@ export class DetailsComponent implements OnInit {
   }
 
   update(item){
-    this.formService.openUpdate(this.resource,item,UpdateComponent)
+    this.updateService.update(this.resource,item)
       
   }
 
   delete(item){
-    this.formService.openDelete(this.resource,item,DeleteComponent)
+    this.deleteService.delete(this.resource,item)
   }
 
 }

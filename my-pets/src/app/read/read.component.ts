@@ -1,10 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core'
 import {MAT_DIALOG_DATA} from '@angular/material/dialog'
-import { CreateComponent } from '../create/create.component'
-import { UpdateComponent } from '../update/update.component'
-import { DeleteComponent } from '../delete/delete.component'
-import { DetailsComponent } from '../details/details.component'
-import { FormService } from '../form.service'
+import { CreateService } from '../crudService/create'
+import { DetailService } from '../crudService/details'
+import { UpdateService } from '../crudService/update'
+import { DeleteService } from '../crudService/delete'
+import {DataService} from '../data.service'
+import { Observable } from 'rxjs'
 
 @Component({
   selector: 'app-read',
@@ -15,36 +16,43 @@ export class ReadComponent implements OnInit {
 
   resource:string
   form:any=[]
-  items:any=[]
+  items$:Observable<any>
 
   constructor(
-    private formService: FormService,
+    public createService: CreateService,
+    public detailService: DetailService,
+    public updateService: UpdateService,
+    public deleteService: DeleteService,
+    public dataService:DataService,
     @Inject(MAT_DIALOG_DATA) data
   ) { 
-    this.items = data.items
     this.resource = data.resource
     this.form =data.form
   }
 
   ngOnInit() {
+    this.items$ = this.dataService.getAll(this.resource)
     
   }
 
+  loadData(){
+  }
+
   create(){
-    this.formService.openCreate(this.resource,CreateComponent)
+    this.createService.create(this.resource)
   }
 
   details(item){
-    this.formService.openDetails(this.resource,item,DetailsComponent)
+    this.detailService.details(this.resource,item)
   }
 
   update(item){
-    this.formService.openUpdate(this.resource,item,UpdateComponent)
+    this.updateService.update(this.resource,item)
       
   }
 
   delete(item){
-    this.formService.openDelete(this.resource,item,DeleteComponent)
+    this.deleteService.delete(this.resource,item)
   }
 
 }

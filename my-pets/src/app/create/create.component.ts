@@ -13,6 +13,8 @@ export class CreateComponent implements OnInit {
 
   resource:string
   form:any=[]
+  item:any=[]
+  id:string
   myFormGroup: FormGroup = new FormGroup({})
 
   constructor(
@@ -20,19 +22,21 @@ export class CreateComponent implements OnInit {
     private dialogRef: MatDialogRef<CreateComponent>,
     @Inject(MAT_DIALOG_DATA) data
   ) {
+    this.resource = data.resource
+    this.item = data.item
     this.form =data.form
-    this.resource=data.resource
-    this.myFormGroup = this.formService.loadFormGroup(this.form)
+    this.myFormGroup = this.formService.loadFormGroup(this.form,this.item)
 
    }
 
   ngOnInit() {
-    
+      
   }
 
   save(){
     this.dialogRef.close(this.myFormGroup.value);
   }
+
   
 
 }
