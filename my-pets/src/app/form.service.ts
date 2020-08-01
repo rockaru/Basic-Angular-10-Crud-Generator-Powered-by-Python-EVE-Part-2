@@ -128,7 +128,6 @@ export class FormService {
       data => {
         if (data) {
           console.log(data)
-          this.dataService.add(resource, data)
         }
       }
     )
@@ -158,7 +157,6 @@ export class FormService {
     dialogRef.afterClosed().subscribe(
       data => {
         if (data) {
-          this.dataService.update(resource, item._id, data)
         }
       }
     )
@@ -193,7 +191,6 @@ export class FormService {
     dialogRef.afterClosed().subscribe(
       data => {
         if (data) {
-          this.dataService.delete(resource, item._id)
         }
       }
     )

@@ -1,38 +1,50 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog'
-import { FormService } from '../form.service'
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
+import {DataService} from '../data.service'
+
 @Component({
-  selector: 'app-update',
   templateUrl: './update.component.html',
   styleUrls: ['./update.component.scss']
 })
 export class UpdateComponent implements OnInit {
 
-  resource:string
-  form:any=[]
   item:any=[]
-  id:string
   myFormGroup: FormGroup = new FormGroup({})
 
   constructor(
-    private formService: FormService,
+    public dataService:DataService,
     private dialogRef: MatDialogRef<UpdateComponent>,
     @Inject(MAT_DIALOG_DATA) data
   ) {
-    this.resource = data.resource
     this.item = data.item
-    this.form =data.form
-    this.myFormGroup = this.formService.loadFormGroup(this.form,this.item)
-
    }
 
   ngOnInit() {
-      
+      this.loadForm()
   }
 
-  save(){
-    this.dialogRef.close(this.myFormGroup.value);
+  loadForm() {
+    const group = {}
+    group["name"] = new FormControl(this.item.name)
+    group["description"] = new FormControl(this.item.description)
+
+
+    this.myFormGroup = new FormGroup(group)
+  }
+
+  save() {
+    const formData = new FormData()
+    if (!this.myFormGroup.get("name").untouched) {
+      formData.append("name", this.myFormGroup.get("name").value)
+    }
+    if (!this.myFormGroup.get("description").untouched) {
+      formData.append("description", this.myFormGroup.get("description").value)
+    }
+    this.dataService.update(this.item._id,formData).subscribe(data => {
+      console.log(data)
+      this.dialogRef.close("close");
+    })
   }
 
 }

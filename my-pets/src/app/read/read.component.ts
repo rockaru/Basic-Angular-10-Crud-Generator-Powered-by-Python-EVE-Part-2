@@ -1,11 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core'
-import {MAT_DIALOG_DATA} from '@angular/material/dialog'
-import { CreateService } from '../crudService/create'
-import { DetailService } from '../crudService/details'
-import { UpdateService } from '../crudService/update'
-import { DeleteService } from '../crudService/delete'
-import {DataService} from '../data.service'
-import { Observable } from 'rxjs'
+import { Component, OnInit } from '@angular/core'
+import { CreateService } from '../create/create.service'
+import { DetailService } from '../detail/detail.service'
+import { UpdateService } from '../update/update.service'
+import { DeleteService } from '../delete/delete.service'
+import { DataService } from '../data.service'
 
 @Component({
   selector: 'app-read',
@@ -14,45 +12,45 @@ import { Observable } from 'rxjs'
 })
 export class ReadComponent implements OnInit {
 
-  resource:string
-  form:any=[]
-  items$:Observable<any>
-
+  items: Array<any> = []
   constructor(
+
     public createService: CreateService,
     public detailService: DetailService,
     public updateService: UpdateService,
     public deleteService: DeleteService,
-    public dataService:DataService,
-    @Inject(MAT_DIALOG_DATA) data
-  ) { 
-    this.resource = data.resource
-    this.form =data.form
-  }
+    public dataService: DataService,
+
+  ) { }
 
   ngOnInit() {
-    this.items$ = this.dataService.getAll(this.resource)
-    
+
+    this.loadData()
+
   }
 
-  loadData(){
+  loadData() {
+
+    this.dataService.getAll().subscribe(data => this.items = data["_items"])
+
   }
 
-  create(){
-    this.createService.create(this.resource)
+  create() {
+    this.createService.open()
   }
 
-  details(item){
-    this.detailService.details(this.resource,item)
+  detail(item) {
+    this.detailService.open(item)
   }
 
-  update(item){
-    this.updateService.update(this.resource,item)
-      
+  update(item) {
+    this.updateService.open(item)
+
   }
 
-  delete(item){
-    this.deleteService.delete(this.resource,item)
+  delete(item) {
+    this.deleteService.open(item)
   }
+
 
 }

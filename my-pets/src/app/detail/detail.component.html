@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Detail {{item.name}}</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="myFormGroup">
+
+       
+        <mat-form-field>
+                    <mat-label>Nume</mat-label>
+                    <input matInput formControlName="name">
+                    </mat-form-field>
+        
+                    <mat-form-field>
+                        <mat-label>Description</mat-label>
+                        <input matInput formControlName="description">
+                        </mat-form-field>
+        
+            </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-raised-button color="accent" (click)="update(item)">Update</button>
+    <button mat-raised-button color="warn" (click)="delete(item)">Delete</button>
+    <button mat-button color="primary" matDialogClose>Close</button>
+
+</mat-dialog-actions>

@@ -4,7 +4,6 @@
         "secure": false,
         "logLevel": "debug",
         "changeOrigin": true,
-        "headers":{"Cache-Control":"no-cache","Pragma":"no-cache","Expires":"Sat, 01 Jan 2000 00:00:00 GMT"},
         "pathRewrite": {
             "^/api": ""
         }

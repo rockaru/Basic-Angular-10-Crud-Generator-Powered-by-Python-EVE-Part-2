@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { CreateService } from './crudService/create'
-import { ReadService } from './crudService/read'
+import { CreateService } from './create/create.service'
+import { ReadService } from './read/read.service'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,15 +13,14 @@ export class AppComponent {
     private readService:ReadService,
     private createService:CreateService,
     )
-  {
-  }
+  {  }
 
   read(resource){
-    this.readService.read(resource)
+    this.readService.open()
   }
 
   create(resource){
-    this.createService.create(resource)
+    this.createService.open()
   }
 
 }
