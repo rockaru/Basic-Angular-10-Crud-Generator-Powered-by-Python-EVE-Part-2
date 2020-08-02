@@ -15,11 +15,11 @@ export class AppComponent {
     )
   {  }
 
-  read(resource){
+  read(){
     this.readService.open()
   }
 
-  create(resource){
+  create(){
     this.createService.open()
   }
 
